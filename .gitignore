@@ -1,0 +1,60 @@
+# === GitHub 仓库安全过滤网 (单仓库多项目专用) ===
+
+# --- 1. 彻底忽略子项目的 Git 元数据 ---
+# 极其重要：防止 Git 将子文件夹识别为“子模块”
+**/.git/                  # 所有目录下的.git文件夹（根目录.git本身不会被跟踪，无需排除）
+!/.gitignore             # 排除根目录的.gitignore（不忽略）
+**/.gitignore            # 所有子目录下的.gitignore（忽略）
+!/.gitattributes         # 排除根目录的.gitattributes（不忽略）
+**/.gitattributes        # 所有子目录下的.gitattributes（忽略）
+!/.gitmodules            # 排除根目录的.gitmodules（不忽略）
+**/.gitmodules           # 所有子目录下的.gitmodules（忽略）
+
+# --- 2. 彻底禁止所有形式的构建目录 ---
+**/build/
+**/build*/
+**/CMakeFiles/
+**/_autogen/
+**/Testing/
+**/.qtcreator/
+
+# --- 3. 彻底禁止二进制文件和库 ---
+**/*.o
+**/*.obj
+**/*.a
+**/*.lib
+**/*.so*
+**/*.dylib
+**/*.dll
+**/*.exe
+**/*.pdb
+**/*.ilk
+**/*.exp
+**/*.app
+
+# --- 4. 彻底禁止 Qt 自动生成的代码 ---
+**/ui_*.h
+**/moc_*.cpp
+**/moc_*.h
+**/qrc_*.cpp
+**/*.moc
+
+# --- 5. 彻底禁止 CMake 生成的本地状态 ---
+**/CMakeCache.txt
+**/CMakeScripts/
+**/cmake_install.cmake
+**/install_manifest.txt
+**/*.ninja
+**/*.cmake
+
+# --- 6. 彻底禁止 IDE 本地配置文件 (包含绝对路径) ---
+**/*.user
+**/*.user.*
+**/.vscode/
+**/.idea/
+
+# --- 7. 操作系统杂质 ---
+**/.DS_Store
+**/Thumbs.db
+**/.*.swp
+**/*~
