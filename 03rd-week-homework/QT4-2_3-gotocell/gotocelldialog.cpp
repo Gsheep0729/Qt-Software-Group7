@@ -1,3 +1,16 @@
+/**
+* @file    /root/Qt-Software-Group7/03rd-week-homework/QT4-2_3-gotocell/gotocelldialog.cpp
+* @date    2026-03-22
+* @author  GY
+* @brief   GoToCellDialog 类实现
+*
+* 实现了跳转到单元格对话框的逻辑，包括基于正则表达式的输入验证
+* 以及确定/取消按钮的状态控制逻辑。
+*
+* Change Log:
+* [v1.0] GY   2026-03-22
+* * Initial creation
+*/
 #include "gotocelldialog.h"
 #include "ui_gotocelldialog.h"
 #include <QRegularExpression>
