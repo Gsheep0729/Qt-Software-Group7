@@ -1,3 +1,7 @@
+//Created By Chunlin Feng Time: 2026.3.22
+//Email:1356962534@qq.com
+//
+
 #include <QApplication>
 #include "gotocelldialog.h"
 
