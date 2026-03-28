@@ -1,14 +1,12 @@
 # === GitHub 仓库安全过滤网 (单仓库多项目专用) ===
 
-# --- 1. 彻底忽略子项目的 Git 元数据 ---
-# 极其重要：防止 Git 将子文件夹识别为“子模块”
-**/.git/                  # 所有目录下的.git文件夹（根目录.git本身不会被跟踪，无需排除）
-!/.gitignore             # 排除根目录的.gitignore（不忽略）
-**/.gitignore            # 所有子目录下的.gitignore（忽略）
-!/.gitattributes         # 排除根目录的.gitattributes（不忽略）
-**/.gitattributes        # 所有子目录下的.gitattributes（忽略）
-!/.gitmodules            # 排除根目录的.gitmodules（不忽略）
-**/.gitmodules           # 所有子目录下的.gitmodules（忽略）
+# --- 1. 保留所有 Git 元数据文件（根+子项目） ---
+# 目的：让根仓库统一跟踪所有子项目的 Git 配置文件，避免子模块识别（子项目内不要手动建.git目录）
+# 注意：根目录的.git是本地仓库核心，Git 天然不跟踪，无需配置
+!**/.gitignore           # 不忽略任何目录下的.gitignore（根+所有子项目）
+!**/.gitattributes       # 不忽略任何目录下的.gitattributes
+!**/.gitmodules          # 不忽略任何目录下的.gitmodules
+# 移除对**/.git/的忽略：但子项目内不要手动创建.git目录，否则Git仍会识别为子模块
 
 # --- 2. 彻底禁止所有形式的构建目录 ---
 **/build/
