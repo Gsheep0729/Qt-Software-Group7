@@ -110,15 +110,18 @@ int main(int argc, char *argv[])
 #pragma once
 
 #include <QDialog>
-#include "ui_widget.h"
+namespace Ui { class Widget; }
 
 // 多重继承：同时继承 QDialog 和 Ui::Widget
-class Widget : public QDialog, public Ui::Widget
+class Widget : public QDialog
 {
     Q_OBJECT
 
 public:
     Widget(QWidget *parent = nullptr);
+
+    // 显式声明析构函数，用于释放 ui 指针指向的堆内存
+    virtual ~Widget();
 
 signals:
     void findNext(const QString &str, Qt::CaseSensitivity cs);      // 向前查找信号
@@ -128,6 +131,11 @@ private slots:
     // 使用Qt自动关联机制：函数名格式为 on_控件名_信号名()
     void on_lineEdit_textChanged(const QString &text);  // 文本变化槽
     void on_findButton_clicked();                        // 查找按钮点击槽
+
+private:
+    // 采用类指针成员的方式来实现 Widget 类和 Ui::Widget 类的组合关系
+    Ui::Widget *ui;
+
 };
 ```
 
@@ -150,6 +158,9 @@ private slots:
 */
 
 #include "widget.h"
+// 在 cpp 文件中才真正包含 UI 自动生成的头文件
+#include "ui_widget.h"
+
 
 /**
  * @brief Widget类的构造函数
@@ -157,21 +168,32 @@ private slots:
  */
 Widget::Widget(QWidget *parent)
     : QDialog(parent)
+    , ui(new Ui::Widget)
 {
-    // 自动加载UI界面，实例化所有控件
-    setupUi(this);
+    // this指针指向了当前根对象，创建当前根对象的孩子窗口部件及其布局
+    ui->setupUi(this);
 
+    // 注意：现在访问所有 UI 控件，都必须加上 ui-> 前缀
     // 设置label和lineEdit的伙伴关系（快捷键关联）
-    label->setBuddy(lineEdit);
+    ui->label->setBuddy(ui->lineEdit);
 
     // 设置查找按钮为默认按钮（按Enter触发）
-    findButton->setDefault(true);
+    ui->findButton->setDefault(true);
 
     // 初始状态下禁用查找按钮（输入框为空）
-    findButton->setEnabled(false);
+    ui->findButton->setEnabled(false);
 
     // 连接关闭按钮的点击信号到关闭槽
-    connect(closeButton, &QPushButton::clicked, this, &Widget::close);
+    connect(ui->closeButton, &QPushButton::clicked, this, &Widget::close);
+}
+
+/**
+ * @brief Widget类的析构函数
+ */
+Widget::~Widget()
+{
+    // Ui::Widget 是一个独立类，对象树机制没有管理这个组合关系，必须手动 delete
+    delete ui;
 }
 
 /**
@@ -183,7 +205,7 @@ Widget::Widget(QWidget *parent)
 void Widget::on_lineEdit_textChanged(const QString &text)
 {
     // 根据输入内容是否为空来启用或禁用查找按钮
-    findButton->setEnabled(!text.isEmpty());
+    ui->findButton->setEnabled(!text.isEmpty());
 }
 
 /**
@@ -193,13 +215,13 @@ void Widget::on_lineEdit_textChanged(const QString &text)
  */
 void Widget::on_findButton_clicked()
 {
-    QString text = lineEdit->text();
+    QString text = ui->lineEdit->text();
 
     // 根据复选框设置是否区分大小写
-    Qt::CaseSensitivity cs = caseCheckBox->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive;
+    Qt::CaseSensitivity cs = ui->caseCheckBox->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive;
 
     // 根据查找方向发射相应的信号
-    if (backwardCheckBox->isChecked()) {
+    if (ui->backwardCheckBox->isChecked()) {
         emit findPrevious(text, cs);  // 向后查找
     } else {
         emit findNext(text, cs);      // 向前查找
