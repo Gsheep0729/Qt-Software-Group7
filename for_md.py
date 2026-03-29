@@ -21,7 +21,7 @@ def merge_code_to_markdown(source_folder):
         'dist', 'node_modules', 'bin', 'obj', 'cmake-build-debug'
     }
 
-    # 3. 想要排除的特定文件名（移除CMakeLists.txt排除）
+    # 3. 想要排除的特定文件名
     EXCLUDE_FILES = set()
 
     # 4. 构建文件规则（需要优先写入的构建类文件）
@@ -52,7 +52,7 @@ def merge_code_to_markdown(source_folder):
     print("-" * 30)
 
     # ========== 第一步：收集所有构建文件 ==========
-    build_files = []  # 存储构建文件的(相对路径, 绝对路径, 是否是后缀匹配)
+    build_files = []  # 存储构建文件的(相对路径, 绝对路径)
     for root, dirs, files in os.walk(source_folder):
         dirs[:] = [d for d in dirs if d not in IGNORE_DIRS]
         for file in files:
@@ -104,7 +104,7 @@ def merge_code_to_markdown(source_folder):
                         file_ext = os.path.splitext(abs_path)[1].lower()
                         if file_name == 'CMakeLists.txt' or file_ext == '.cmake':
                             lang_tag = 'cmake'
-                        elif file_ext == '.pro' or file_ext == '.pri' or file_ext == '.prf':
+                        elif file_ext in ['.pro', '.pri', '.prf']:
                             lang_tag = 'qmake'  # qmake构建文件
                         elif 'makefile' in file_name.lower():
                             lang_tag = 'makefile'
@@ -154,12 +154,16 @@ def merge_code_to_markdown(source_folder):
                     ALLOW_EXTS = {
                         '.cpp', '.h', '.c', '.hpp', '.cppm', '.cc', '.cxx',
                         '.py', '.java', '.js', '.ts', '.html', '.css',
-                        '.md', '.txt', '.json', '.toml', '.dat', '.xml', '.sql', '.sh'
+                        '.md', '.txt', '.json', '.toml', '.dat', '.xml', '.sql', '.sh',
+                        '.ui'  # 增加 .ui 格式支持
                     }
+                    
                     if file_ext not in ALLOW_EXTS:
                         continue
 
                     relative_path = os.path.relpath(file_path, source_folder)
+                    
+                    # --- 修复后的缩进部分 ---
                     try:
                         with open(file_path, 'r', encoding='utf-8') as infile:
                             content = infile.read()
@@ -168,6 +172,8 @@ def merge_code_to_markdown(source_folder):
                         lang_tag = file_ext.replace('.', '')
                         if lang_tag in ['h', 'hpp']:
                             lang_tag = 'cpp'
+                        elif lang_tag == 'ui':
+                            lang_tag = 'xml'  # .ui 文件按 XML 语法高亮
 
                         # 写入源文件内容
                         outfile.write(f"### File: {relative_path}\n")
@@ -183,6 +189,7 @@ def merge_code_to_markdown(source_folder):
                         print(f"⚠️  跳过二进制或非UTF-8源文件: {relative_path}")
                     except Exception as e:
                         print(f"❌ 读取源文件错误 {relative_path}: {e}")
+                    # -------------------------
 
             # 输出统计信息
             print("-" * 30)
