@@ -1,18 +1,20 @@
 #ifndef BUTTON_H
 #define BUTTON_H
+
 #include <QPushButton>
 
-class button : public QPushButton
+class Button : public QPushButton
 {
-        Q_OBJECT;
+    Q_OBJECT
 public:
-        explicit Button(QWidget *parent = nullptr);
+    explicit Button(QWidget *parent = nullptr);
 
 signals:
-        void doubleClicked(bool checked = false);
+    void doubleClicked(bool checked = false);
+
 protected:
-        virtual void mouseReleaseEvent(QMouseEvent *event) override;
-    virtual void mouseDoubleClickedEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
 };
 
 #endif

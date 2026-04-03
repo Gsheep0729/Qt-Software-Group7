@@ -1,19 +1,24 @@
 #include "button.h"
+#include <QMouseEvent>
 #include <QDebug>
-#include <QMoveEvent>
 
-Button::Button(QWidget *parent);
-    QPushButton{parent}
-{}
+Button::Button(QWidget *parent)
+    : QPushButton(parent)
+{
+}
 
-    void Button::mouseReleaseEvent(QMouseEvent *event){
-        move(event -> scenePosition().toPoint());
-    }
+void Button::mouseReleaseEvent(QMouseEvent *event)
+{
+    move(event->scenePosition().toPoint());
+    QPushButton::mouseReleaseEvent(event);
+}
 
-    void Button::mouseDoubleClickedEvent(QMouseEvent *event)
+void Button::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if(event->button() == Qt::LeftButton)
     {
-        if(event->button() == Qt::LeftButton){
-            emit doubleClicked(isChecked());
-            qDebug << "A signal doubleClicked() has been emitted.";
-        }
+        emit doubleClicked(isChecked());
+        qDebug() << "A signal doubleClicked() has been emitted.";
     }
+
+}
