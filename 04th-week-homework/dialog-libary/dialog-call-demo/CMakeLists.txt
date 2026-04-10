@@ -21,9 +21,12 @@ target_compile_features(dialog-call-demo PRIVATE cxx_std_23)
 # set(LIB_BIN_DIR "${LIB_SRC_DIR}/build/C_C_2026_03_29-Debug") # 需要修改实际路径
 
 # 1. 库的源码路径,这里需要修改为真实路径
-set(LIB_SRC_DIR "/root/Qt-Software-Group7/04th-week-homework/dialog-libary/QT4_2-3_dialog-library")
+# set(LIB_SRC_DIR "/root/Qt-Software-Group7/04th-week-homework/dialog-libary/QT4_2-3_dialog-library")
 # 现在的二进制路径直接指向我们刚才固定的 lib 文件夹
-set(LIB_BIN_DIR "${LIB_SRC_DIR}/lib")
+# set(LIB_BIN_DIR "${LIB_SRC_DIR}/lib")
+
+# 1. 定义库的安装根目录
+set(LIB_INSTALL_DIR "/opt/QT4_2-3_dialog-library")
 
 target_sources(dialog-call-demo
     PRIVATE FILE_SET cxx_modules TYPE CXX_MODULES FILES
@@ -36,19 +39,28 @@ target_sources(dialog-call-demo
 
 # 2. 添加头文件搜索路径，这样 main.cpp 才能找到 "widget.h"
 target_include_directories(dialog-call-demo PRIVATE ${LIB_SRC_DIR})
+# 2. 添加头文件搜索路径 (现在指向 /opt/.../include)
+target_include_directories(dialog-call-demo PRIVATE "${LIB_INSTALL_DIR}/include")
 
 # 3. 修改链接逻辑
 target_link_libraries(dialog-call-demo
     PRIVATE
         Qt6::Widgets
-        "${LIB_BIN_DIR}/libQT4_2-3_dialog-library.so" # 链接具体的库文件
+        "${LIB_INSTALL_DIR}/lib/libQT4_2-3_dialog-library.so" # 链接具体的库文件
 )
 
-# 5. 设置 RPATH，确保程序启动时能自动找到 .so 所在位置
+# 设置 RPATH，确保程序启动时能自动找到 .so 所在位置
+# set_target_properties(dialog-call-demo PROPERTIES
+#     BUILD_RPATH "${LIB_BIN_DIR}"
+#     AUTORCC TRUE
+#     WIN32_EXECUTABLE TRUE
+# )
+
+# 4. 设置 RPATH，确保程序运行时能找到 /opt/lib 下的动态库
 set_target_properties(dialog-call-demo PROPERTIES
-    BUILD_RPATH "${LIB_BIN_DIR}"
+    BUILD_RPATH "${LIB_INSTALL_DIR}/lib"
+    INSTALL_RPATH "${LIB_INSTALL_DIR}/lib"
     AUTORCC TRUE
-    WIN32_EXECUTABLE TRUE
 )
 
 include(GNUInstallDirs)
