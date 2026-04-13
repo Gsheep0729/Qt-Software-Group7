@@ -31,9 +31,17 @@ _qt_add_executable(dialog-call-demo)
 
 target_compile_features(dialog-call-demo PRIVATE cxx_std_23)
 
-# 1. 在 project 之后定义库的路径变量（方便维护）
-set(LIB_SRC_DIR "/root/Qt-Software-Group7/04th-week-homework/QT4_2-3_dialog-library")
-set(LIB_BIN_DIR "${LIB_SRC_DIR}/build/C_C_2026_03_29-Debug")
+# # 1. 在 project 之后定义库的路径变量（方便维护）
+# set(LIB_SRC_DIR "/root/Qt-Software-Group7/04th-week-homework/dialog-libary/QT4_2-3_dialog-library")
+# set(LIB_BIN_DIR "${LIB_SRC_DIR}/build/C_C_2026_03_29-Debug") # 需要修改实际路径
+
+# 1. 库的源码路径,这里需要修改为真实路径
+# set(LIB_SRC_DIR "/root/Qt-Software-Group7/04th-week-homework/dialog-libary/QT4_2-3_dialog-library")
+# 现在的二进制路径直接指向我们刚才固定的 lib 文件夹
+# set(LIB_BIN_DIR "${LIB_SRC_DIR}/lib")
+
+# 1. 定义库的安装根目录
+set(LIB_INSTALL_DIR "/opt/QT4_2-3_dialog-library")
 
 target_sources(dialog-call-demo
     PRIVATE FILE_SET cxx_modules TYPE CXX_MODULES FILES
@@ -44,21 +52,30 @@ target_sources(dialog-call-demo
 
 # source_group("birds", FILES birds.cppm)
 
-# 3. 添加头文件搜索路径，这样 main.cpp 才能找到 "widget.h"
+# 2. 添加头文件搜索路径，这样 main.cpp 才能找到 "widget.h"
 target_include_directories(dialog-call-demo PRIVATE ${LIB_SRC_DIR})
+# 2. 添加头文件搜索路径 (现在指向 /opt/.../include)
+target_include_directories(dialog-call-demo PRIVATE "${LIB_INSTALL_DIR}/include")
 
-# 4. 修改链接逻辑
+# 3. 修改链接逻辑
 target_link_libraries(dialog-call-demo
     PRIVATE
         Qt6::Widgets
-        "${LIB_BIN_DIR}/libQT4_2-3_dialog-library.so" # 链接具体的库文件
+        "${LIB_INSTALL_DIR}/lib/libQT4_2-3_dialog-library.so" # 链接具体的库文件
 )
 
-# 5. 设置 RPATH，确保程序启动时能自动找到 .so 所在位置
+# 设置 RPATH，确保程序启动时能自动找到 .so 所在位置
+# set_target_properties(dialog-call-demo PROPERTIES
+#     BUILD_RPATH "${LIB_BIN_DIR}"
+#     AUTORCC TRUE
+#     WIN32_EXECUTABLE TRUE
+# )
+
+# 4. 设置 RPATH，确保程序运行时能找到 /opt/lib 下的动态库
 set_target_properties(dialog-call-demo PROPERTIES
-    BUILD_RPATH "${LIB_BIN_DIR}"
+    BUILD_RPATH "${LIB_INSTALL_DIR}/lib"
+    INSTALL_RPATH "${LIB_INSTALL_DIR}/lib"
     AUTORCC TRUE
-    WIN32_EXECUTABLE TRUE
 )
 
 include(GNUInstallDirs)
@@ -84,6 +101,20 @@ install(SCRIPT ${deploy_script})
 
 ### File: main.cpp
 ```cpp
+/**
+* @file    /root/Qt-Software-Group7/04th-week-homework/dialog-libary/dialog-call-demo/main.cpp
+* @date    2026-03-29
+* @author  GY
+* @brief   这是一个测试QT4_2-3_dialog-library打包成.so库文件的demo
+*
+*运行前需要将dialog-call-demo和QT4_2-3_dialog-library项目文件夹都移到ext4格式的硬盘路径下。
+*然后修改dialog-call-demo项目cmake文件第24行库文件路径中
+*先运行QT4_2-3_dialog-library项目生成.so库文件，然后再运行此demo项目测试调用库
+*
+* Change Log:
+* [v1.0] GY   2026-03-29
+* * Initial creation
+*/
 #include <QApplication>
 #include "widget.h" // 此时通过 CMake 的路径配置，它会找到库里的 widget.h
 

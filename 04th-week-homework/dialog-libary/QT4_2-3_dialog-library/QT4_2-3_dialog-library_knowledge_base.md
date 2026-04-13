@@ -29,6 +29,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets)
 
+# 将库文件统一生成到项目根目录下的 lib 文件夹中
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
+
 add_library(QT4_2-3_dialog-library SHARED
   QT4_2-3_dialog-library_global.h
   widget.ui
@@ -93,6 +96,112 @@ install(TARGETS QT4_2-3_dialog-library
 ## 项目源文件
 ---
 
+### File: widget.ui
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Widget</class>
+ <widget class="QDialog" name="Widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>320</width>
+    <height>120</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Find</string>
+  </property>
+  <layout class="QHBoxLayout" name="mainLayout">
+   <item>
+    <layout class="QVBoxLayout" name="leftLayout">
+     <item>
+      <layout class="QHBoxLayout" name="topLeftLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Find &amp;what:</string>
+         </property>
+         <property name="buddy">
+          <cstring>lineEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="caseCheckBox">
+       <property name="text">
+        <string>Match &amp;case</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="backwardCheckBox">
+       <property name="text">
+        <string>Search &amp;backward</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="rightLayout">
+     <item>
+      <widget class="QPushButton" name="findButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>&amp;Find</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="closeButton">
+       <property name="text">
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>closeButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Widget</receiver>
+   <slot>close()</slot>
+  </connection>
+ </connections>
+</ui>
+```
+
+---
+
 ### File: QT4_2-3_dialog-library_global.h
 ```cpp
 #pragma once
@@ -104,55 +213,6 @@ install(TARGETS QT4_2-3_dialog-library
 #else
 #define QT4_2_3_DIALOG_LIBRARY_EXPORT Q_DECL_IMPORT
 #endif
-
-```
-
----
-
-### File: widget.h
-```cpp
-/**
-* @file    widget.h
-* @date    2026-03-22
-* @author  GY
-* @brief   实现《C++ GUI Qt4编程》2.3节 查找对话框 (基于 Qt Designer)
-*
-* 使用 ui 界面文件分离视图与逻辑，摒弃了纯代码布局。
-* 包含 UI 命名空间前向声明、UI 指针以及重构后的槽函数。
-*
-* Change Log:
-* [v1.0] GY   2026-03-22
-* * Initial creation
-*/
-#pragma once
-
-#include <QDialog>
-#include "QT4_2-3_dialog-library_global.h"  // 包含全局导出宏的头文件
-
-// 声明 Ui 命名空间中的 Widget 类（由 uic 工具根据 widget.ui 自动生成）
-QT_BEGIN_NAMESPACE
-namespace Ui { class Widget; }
-QT_END_NAMESPACE
-
-class QT4_2_3_DIALOG_LIBRARY_EXPORT Widget : public QDialog
-{
-    Q_OBJECT
-
-public:
-    explicit Widget(QWidget *parent = nullptr);
-    ~Widget();
-
-signals:
-    void findNext(const QString &str, Qt::CaseSensitivity cs);
-    void findPrevious(const QString &str, Qt::CaseSensitivity cs);
-
-private slots:
-    void findClicked();
-    void enableFindButton(const QString &text);
-
-private:
-    Ui::Widget *ui; // 指向自动生成的 UI 类的指针
-};
 
 ```
 
@@ -218,6 +278,55 @@ void Widget::enableFindButton(const QString &text)
 {
     ui->findButton->setEnabled(!text.isEmpty());
 }
+
+```
+
+---
+
+### File: widget.h
+```cpp
+/**
+* @file    widget.h
+* @date    2026-03-22
+* @author  GY
+* @brief   实现《C++ GUI Qt4编程》2.3节 查找对话框 (基于 Qt Designer)
+*
+* 使用 ui 界面文件分离视图与逻辑，摒弃了纯代码布局。
+* 包含 UI 命名空间前向声明、UI 指针以及重构后的槽函数。
+*
+* Change Log:
+* [v1.0] GY   2026-03-22
+* * Initial creation
+*/
+#pragma once
+
+#include <QDialog>
+#include "QT4_2-3_dialog-library_global.h"  // 包含全局导出宏的头文件
+
+// 声明 Ui 命名空间中的 Widget 类（由 uic 工具根据 widget.ui 自动生成）
+QT_BEGIN_NAMESPACE
+namespace Ui { class Widget; }
+QT_END_NAMESPACE
+
+class QT4_2_3_DIALOG_LIBRARY_EXPORT Widget : public QDialog
+{
+    Q_OBJECT
+
+public:
+    explicit Widget(QWidget *parent = nullptr);
+    ~Widget();
+
+signals:
+    void findNext(const QString &str, Qt::CaseSensitivity cs);
+    void findPrevious(const QString &str, Qt::CaseSensitivity cs);
+
+private slots:
+    void findClicked();
+    void enableFindButton(const QString &text);
+
+private:
+    Ui::Widget *ui; // 指向自动生成的 UI 类的指针
+};
 
 ```
 
