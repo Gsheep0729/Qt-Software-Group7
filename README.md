@@ -166,6 +166,15 @@ git switch release
 
 # 拉取远程release最新代码
 git pull origin release
+
+# 拉取别人的分支后想删除未跟踪的文件，预览要删除的文件/目录
+git clean -nfd
+
+# 只删未跟踪文件
+git clean -fd
+
+# 删未跟踪 + 删 .gitignore 所有文件
+git clean -fdx
 ```
 
 ### 4. 合并 Tag 到 Release 分支（二选一）
