@@ -1,2 +1,0 @@
-set(__QT_DEPLOY_TARGET_GoToCellDialog_FILE /run/media/root/Windows/study/code/group_7_store/Qt-Software-Group7/GoToCellDialog/build/C_2026_03_20_ed21f5-Debug/GoToCellDialog)
-set(__QT_DEPLOY_TARGET_GoToCellDialog_TYPE EXECUTABLE)
