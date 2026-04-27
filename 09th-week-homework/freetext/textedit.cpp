@@ -1,3 +1,2 @@
 #include "textedit.h"
-
-TextEdit::TextEdit() {}
+TextEdit::TextEdit(QWidget *parent) : QTextEdit(parent) {}

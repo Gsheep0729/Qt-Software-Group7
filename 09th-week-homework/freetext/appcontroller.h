@@ -1,7 +1,21 @@
 #pragma once
+#include <QObject>
 
-class AppController
+class TextEdit;
+class DocumentStorage;
+
+class AppController : public QObject
 {
+    Q_OBJECT
 public:
-    AppController();
+    explicit AppController(QObject *parent = nullptr);
+    ~AppController();
+
+    void setTextEdit(TextEdit *te);
+    void setStorage(DocumentStorage *ds);
+    void saveDocument();
+
+private:
+    TextEdit *textEdit = nullptr;
+    DocumentStorage *storage = nullptr;
 };

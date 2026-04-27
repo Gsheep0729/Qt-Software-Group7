@@ -1,9 +1,9 @@
 #pragma once
-
 #include <QTextEdit>
 
 class TextEdit : public QTextEdit
 {
+    Q_OBJECT
 public:
-    TextEdit();
+    explicit TextEdit(QWidget *parent = nullptr);
 };
