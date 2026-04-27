@@ -6,16 +6,16 @@ function(_qt_add_executable target)
     qt_add_executable(${target})
 endfunction()
 
-project(textfree VERSION 0.1 LANGUAGES CXX)
+project(freetext VERSION 0.1 LANGUAGES CXX)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 qt_standard_project_setup()
 
-_qt_add_executable(textfree)
+_qt_add_executable(freetext)
 
-target_compile_features(textfree PRIVATE cxx_std_23)
+target_compile_features(freetext PRIVATE cxx_std_23)
 
-target_sources(textfree
+target_sources(freetext
     PRIVATE FILE_SET cxx_modules TYPE CXX_MODULES FILES
         # birds.cppm           # 模块文件
     PRIVATE
@@ -24,31 +24,31 @@ target_sources(textfree
         window.h
         window.ui
         textedit.h textedit.cpp
-        appcontroller.h appcontroller.cpp
         documentstorage.h documentstorage.cpp
+        appcontroller.h appcontroller.cpp
 )
-
+target_include_directories(freetext PRIVATE .)
 # source_group("birds", FILES birds.cppm)
 
-target_link_libraries(textfree 
+target_link_libraries(freetext 
     PRIVATE 
         Qt6::Widgets
 )
 
-set_target_properties(textfree PROPERTIES
+set_target_properties(freetext PROPERTIES
     AUTORCC TRUE
     WIN32_EXECUTABLE TRUE
 )
 
 include(GNUInstallDirs)
-set(CMAKE_INSTALL_PREFIX "/opt/textfree" CACHE PATH "Install path prefix" FORCE)
-install(TARGETS textfree
+set(CMAKE_INSTALL_PREFIX "/opt/freetext" CACHE PATH "Install path prefix" FORCE)
+install(TARGETS freetext
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
 qt_generate_deploy_app_script(
-    TARGET textfree
+    TARGET freetext
     OUTPUT_SCRIPT deploy_script
     NO_UNSUPPORTED_PLATFORM_ERROR
 )

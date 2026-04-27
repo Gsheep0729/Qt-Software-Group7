@@ -1,33 +1,33 @@
 #include "window.h"
-#include "./ui_window.h"
+#include "ui_window.h"          // 生成的头文件名不变
 #include "appcontroller.h"
-#include "textedit.h"
-#include "documentstorage.h"
+#include <QFileDialog>
+#include <QCloseEvent>
 
-Window::Window(QWidget *parent)
+Window::Window(AppController *appCtrl, QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::Window)
+    , m_ui(new Ui::tw_window)   // 使用 Ui::tw_window
+    , _appCtrl(appCtrl)
 {
-    ui->setupUi(this);
-
-
-    textEdit = new TextEdit(this);
-    setCentralWidget(textEdit);
-
-    controller = new AppController(this);
-    DocumentStorage *storage = new DocumentStorage; // 没有 parent，由 controller 管理
-    controller->setTextEdit(textEdit);
-    controller->setStorage(storage);
-    connect(ui->actionSave, &QAction::triggered,
-            this, &Window::onSaveTriggered);
+    m_ui->setupUi(this);
 }
 
 Window::~Window()
 {
-    delete ui;
+    delete m_ui;
 }
 
-void Window::onSaveTriggered()
+QString Window::getSaveFilepath()
 {
-    controller->saveDocument();
+    return QFileDialog::getSaveFileName(this, tr("freetext Save"), "/root", tr("Text files (*)"));
+}
+
+void Window::closeEvent(QCloseEvent *event)
+{
+    event->accept();
+}
+
+void Window::on_action_Save_triggered()   // 槽实现
+{
+    _appCtrl->save();
 }

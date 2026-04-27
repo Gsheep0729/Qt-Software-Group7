@@ -1,6 +1,7 @@
 #pragma once
 #include <QObject>
 
+class Window;
 class TextEdit;
 class DocumentStorage;
 
@@ -8,14 +9,17 @@ class AppController : public QObject
 {
     Q_OBJECT
 public:
-    explicit AppController(QObject *parent = nullptr);
-    ~AppController();
+    static AppController &singleton();
 
-    void setTextEdit(TextEdit *te);
-    void setStorage(DocumentStorage *ds);
-    void saveDocument();
+    bool save();
 
 private:
-    TextEdit *textEdit = nullptr;
-    DocumentStorage *storage = nullptr;
+    AppController();
+    ~AppController() noexcept;
+
+    void currentState(bool &titled, bool &modified);
+
+    Window *_window;
+    TextEdit *_textEdit;
+    DocumentStorage *_ds;
 };

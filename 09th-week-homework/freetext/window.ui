@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Window</class>
- <widget class="QMainWindow" name="Window">
+ <class>tw_window</class>
+ <widget class="QMainWindow" name="tw_window">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -27,7 +27,7 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionSave"/>
+    <addaction name="action_Save"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -42,9 +42,9 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionSave"/>
+   <addaction name="action_Save"/>
   </widget>
-  <action name="actionSave">
+  <action name="action_Save">
    <property name="icon">
     <iconset theme="QIcon::ThemeIcon::DocumentSave"/>
    </property>
