@@ -1,33 +1,19 @@
 #include "window.h"
-#include "ui_window.h"          // 生成的头文件名不变
+#include "./ui_window.h"
 #include "appcontroller.h"
-#include <QFileDialog>
-#include <QCloseEvent>
 
-Window::Window(AppController *appCtrl, QWidget *parent)
+Window::Window(QWidget *parent)
     : QMainWindow(parent)
-    , m_ui(new Ui::tw_window)   // 使用 Ui::tw_window
-    , _appCtrl(appCtrl)
+    , ui(new Ui::Window)
 {
-    m_ui->setupUi(this);
+    ui->setupUi(this);
+    m_controller = new AppController;
 }
 
 Window::~Window()
 {
-    delete m_ui;
+    delete ui;
 }
 
-QString Window::getSaveFilepath()
-{
-    return QFileDialog::getSaveFileName(this, tr("freetext Save"), "/root", tr("Text files (*)"));
-}
+void Window::onSaveClicked() {}
 
-void Window::closeEvent(QCloseEvent *event)
-{
-    event->accept();
-}
-
-void Window::on_action_Save_triggered()   // 槽实现
-{
-    _appCtrl->save();
-}

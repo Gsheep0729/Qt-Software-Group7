@@ -1,16 +1,9 @@
 #pragma once
-#include <QObject>
-#include <QFile>
-#include <QTextStream>
+#include <QString>
 
-class DocumentStorage : public QObject
+class DocumentStorage
 {
-    Q_OBJECT
 public:
-    explicit DocumentStorage(QObject *parent = nullptr);
-    bool writeFile(const QString &filePath, const QString &text);
-
-private:
-    QFile m_file;
-    QTextStream m_ofs;
+    DocumentStorage();
+    bool saveFile(const QString& filePath,const QString& content);
 };

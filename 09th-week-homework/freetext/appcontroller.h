@@ -1,25 +1,13 @@
 #pragma once
-#include <QObject>
+#include "documentstorage.h"
 
-class Window;
-class TextEdit;
-class DocumentStorage;
-
-class AppController : public QObject
+class AppController
 {
-    Q_OBJECT
 public:
-    static AppController &singleton();
-
-    bool save();
+    AppController();
+    void saveText(const QString &text);
 
 private:
-    AppController();
-    ~AppController() noexcept;
-
-    void currentState(bool &titled, bool &modified);
-
-    Window *_window;
-    TextEdit *_textEdit;
-    DocumentStorage *_ds;
+    DocumentStorage *m_storage;
 };
+

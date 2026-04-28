@@ -24,10 +24,10 @@ target_sources(freetext
         window.h
         window.ui
         textedit.h textedit.cpp
-        documentstorage.h documentstorage.cpp
         appcontroller.h appcontroller.cpp
+        documentstorage.h documentstorage.cpp
 )
-target_include_directories(freetext PRIVATE .)
+
 # source_group("birds", FILES birds.cppm)
 
 target_link_libraries(freetext 
