@@ -1,8 +1,17 @@
 #include "documentstorage.h"
 
-DocumentStorage::DocumentStorage() {}
+DocumentStorage::DocumentStorage(QObject *parent)
+    : QObject{parent}
+{}
 
-bool DocumentStorage::saveFile(const QString &filePath, const QString &content)
+bool DocumentStorage::writeFile(const QString &filePath, const QString &text)
 {
-    return false;
+    QFile file(filePath);
+    if (!file.open(QFile::WriteOnly | QFile::Text))
+        return false;
+
+    QTextStream out(&file);
+    out << text;
+    file.close();
+    return true;
 }

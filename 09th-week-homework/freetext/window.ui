@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>871</width>
-    <height>621</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>871</width>
+     <width>800</width>
      <height>27</height>
     </rect>
    </property>
@@ -56,14 +56,6 @@
    <addaction name="action_Save"/>
    <addaction name="action_Exit"/>
   </widget>
-  <action name="action_Open">
-   <property name="icon">
-    <iconset theme="QIcon::ThemeIcon::DocumentOpen"/>
-   </property>
-   <property name="text">
-    <string>&amp;Open</string>
-   </property>
-  </action>
   <action name="action_New">
    <property name="icon">
     <iconset theme="QIcon::ThemeIcon::DocumentNew"/>
@@ -72,12 +64,12 @@
     <string>&amp;New</string>
    </property>
   </action>
-  <action name="action_Exit">
+  <action name="action_Open">
    <property name="icon">
-    <iconset theme="QIcon::ThemeIcon::GoHome"/>
+    <iconset theme="QIcon::ThemeIcon::DocumentOpen"/>
    </property>
    <property name="text">
-    <string>&amp;Exit</string>
+    <string>&amp;Open</string>
    </property>
   </action>
   <action name="action_Save">
@@ -86,6 +78,14 @@
    </property>
    <property name="text">
     <string>&amp;Save</string>
+   </property>
+  </action>
+  <action name="action_Exit">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::GoHome"/>
+   </property>
+   <property name="text">
+    <string>&amp;Exit</string>
    </property>
   </action>
  </widget>

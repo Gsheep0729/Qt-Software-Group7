@@ -23,9 +23,12 @@ target_sources(freetext
         window.cpp
         window.h
         window.ui
-        textedit.h textedit.cpp
         appcontroller.h appcontroller.cpp
+
         documentstorage.h documentstorage.cpp
+        textedit.h textedit.cpp
+
+
 )
 
 # source_group("birds", FILES birds.cppm)

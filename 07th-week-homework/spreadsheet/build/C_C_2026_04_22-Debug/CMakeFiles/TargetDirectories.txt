@@ -1,0 +1,10 @@
+/root/homework/Qt-Software-Group7/07th-week-homework/spreadsheet/build/C_C_2026_04_22-Debug/CMakeFiles/spreadsheet.dir
+/root/homework/Qt-Software-Group7/07th-week-homework/spreadsheet/build/C_C_2026_04_22-Debug/CMakeFiles/edit_cache.dir
+/root/homework/Qt-Software-Group7/07th-week-homework/spreadsheet/build/C_C_2026_04_22-Debug/CMakeFiles/rebuild_cache.dir
+/root/homework/Qt-Software-Group7/07th-week-homework/spreadsheet/build/C_C_2026_04_22-Debug/CMakeFiles/list_install_components.dir
+/root/homework/Qt-Software-Group7/07th-week-homework/spreadsheet/build/C_C_2026_04_22-Debug/CMakeFiles/install.dir
+/root/homework/Qt-Software-Group7/07th-week-homework/spreadsheet/build/C_C_2026_04_22-Debug/CMakeFiles/install/local.dir
+/root/homework/Qt-Software-Group7/07th-week-homework/spreadsheet/build/C_C_2026_04_22-Debug/CMakeFiles/install/strip.dir
+/root/homework/Qt-Software-Group7/07th-week-homework/spreadsheet/build/C_C_2026_04_22-Debug/CMakeFiles/spreadsheet_autogen_timestamp_deps.dir
+/root/homework/Qt-Software-Group7/07th-week-homework/spreadsheet/build/C_C_2026_04_22-Debug/CMakeFiles/spreadsheet_autogen.dir
+/root/homework/Qt-Software-Group7/07th-week-homework/spreadsheet/build/C_C_2026_04_22-Debug/CMakeFiles/__CMAKE__CXX23@synth_d8e2ce851d7b.dir

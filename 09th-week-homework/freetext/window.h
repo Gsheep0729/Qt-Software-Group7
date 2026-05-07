@@ -15,13 +15,18 @@ class Window : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit Window(QWidget *parent = nullptr);
+    explicit Window(AppController *appCtrl,QWidget *parent = nullptr);
     ~Window() override;
 
+    QString getSaveFilepath();
+
+protected:
+    virtual void closeEvent(QCloseEvent *event) override;
+
 private slots:
-    void onSaveClicked();
+    void on_action_Save_triggered();
 
 private:
-    Ui::Window *ui;
-    AppController *m_controller;
+    Ui::Window *m_ui;
+    AppController *_appCtrl;
 };

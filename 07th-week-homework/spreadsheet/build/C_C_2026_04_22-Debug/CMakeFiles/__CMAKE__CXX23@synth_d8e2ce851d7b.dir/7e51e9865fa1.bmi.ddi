@@ -1,0 +1,17 @@
+{
+"rules": [
+{
+"primary-output": "CMakeFiles/__CMAKE__CXX23@synth_d8e2ce851d7b.dir/7e51e9865fa1.bmi",
+"provides": [
+{
+"logical-name": "std",
+"is-interface": true
+}
+],
+"requires": [
+]
+}
+],
+"version": 0,
+"revision": 0
+}

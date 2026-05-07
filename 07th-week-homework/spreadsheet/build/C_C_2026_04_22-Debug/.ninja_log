@@ -1,0 +1,17 @@
+# ninja log v6
+2	17	1776821484549025358	CMakeFiles/__CMAKE__CXX23@synth_d8e2ce851d7b.dir/f487656d2897.bmi.ddi	4ae25dfbd29707b5
+2	538	1776821484548141859	CMakeFiles/__CMAKE__CXX23@synth_d8e2ce851d7b.dir/7e51e9865fa1.bmi.ddi	843cf7a80048ca48
+538	562	1776821485107175121	CMakeFiles/__CMAKE__CXX23@synth_d8e2ce851d7b.dir/CXX.dd	d7f098d94f539f42
+538	562	1776821485107175121	CMakeFiles/__CMAKE__CXX23@synth_d8e2ce851d7b.dir/CXXModules.json	d7f098d94f539f42
+538	562	1776821485107175121	CMakeFiles/__CMAKE__CXX23@synth_d8e2ce851d7b.dir/7e51e9865fa1.bmi.modmap	d7f098d94f539f42
+538	562	1776821485107175121	CMakeFiles/__CMAKE__CXX23@synth_d8e2ce851d7b.dir/f487656d2897.bmi.modmap	d7f098d94f539f42
+3	910	1776821485429208978	spreadsheet_autogen/timestamp	c777fb0def0ca88
+3	910	1776821485429208978	spreadsheet_autogen/mocs_compilation.cpp	c777fb0def0ca88
+3	910	1776821485429208978	/root/homework/Qt-Software-Group7/07th-week-homework/spreadsheet/build/C_C_2026_04_22-Debug/spreadsheet_autogen/timestamp	c777fb0def0ca88
+3	910	1776821485429208978	/root/homework/Qt-Software-Group7/07th-week-homework/spreadsheet/build/C_C_2026_04_22-Debug/spreadsheet_autogen/mocs_compilation.cpp	c777fb0def0ca88
+913	5459	1776821485459997693	CMakeFiles/spreadsheet.dir/main.cpp.o	66359568b8fe6d54
+913	5927	1776821485459211268	CMakeFiles/spreadsheet.dir/spreadsheet_autogen/mocs_compilation.cpp.o	c1396defec89b80c
+914	6466	1776821485460211344	CMakeFiles/spreadsheet.dir/window.cpp.o	368c2e65cf4e650a
+914	10815	1776821485461000455	CMakeFiles/spreadsheet.dir/cell.cpp.o	5d0511760f9852a5
+915	11274	1776821485461211420	CMakeFiles/spreadsheet.dir/spreadsheet.cpp.o	c4f00f1bb882738
+11274	11657	1776821495820013758	spreadsheet	1cd1684d84b05e32
