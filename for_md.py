@@ -54,7 +54,7 @@ def merge_code_to_markdown(source_folder):
 
     BUILD_FILES_PATTERN = {
         'CMakeLists.txt', 'Makefile', 'makefile', 'GNUmakefile',
-        '.pro', '.cmake', '.pri', '.prf', '.qmake.conf'
+        '.pro', '.cmake', '.pri', '.prf', '.qmake.conf', 'qmldir'
     }
     # ===========================================
 
@@ -163,6 +163,7 @@ def merge_code_to_markdown(source_folder):
             header_files = []
             source_files = []
             ui_files = []
+            qml_files = []
 
             for root, dirs, files in os.walk(source_folder):
                 dirs[:] = [d for d in dirs if d not in IGNORE_DIRS]
@@ -189,7 +190,7 @@ def merge_code_to_markdown(source_folder):
                         '.cpp', '.h', '.c', '.hpp', '.cppm', '.cc', '.cxx',
                         '.py', '.java', '.js', '.ts', '.html', '.css',
                         '.md', '.txt', '.json', '.toml', '.dat', '.xml', '.sql', '.sh',
-                        '.ui'
+                        '.ui', '.qml', '.qrc', '.conf'
                     }
                     if file_ext not in ALLOW_EXTS:
                         continue
@@ -200,13 +201,16 @@ def merge_code_to_markdown(source_folder):
                         header_files.append((relative_path, file_path, file_ext))
                     elif file_ext == '.ui':
                         ui_files.append((relative_path, file_path, file_ext))
+                    elif file_ext in ['.qml', '.js', '.qrc', '.conf']:
+                        qml_files.append((relative_path, file_path, file_ext))
                     else:
                         source_files.append((relative_path, file_path, file_ext))
 
             categories = [
                 ("1. 头文件（Header Files）", header_files, "header"),
                 ("2. 源文件（Source Files）", source_files, "source"),
-                ("3. 界面设计文件（Qt UI Files）", ui_files, "ui")
+                ("3. 界面设计文件（Qt UI Files）", ui_files, "ui"),
+                ("4. QML/JavaScript 资源文件（QML/JS Files）", qml_files, "qml")
             ]
 
             for title, files, type_tag in categories:
@@ -221,8 +225,10 @@ def merge_code_to_markdown(source_folder):
                             lang_tag = f_ext.replace('.', '')
                             if lang_tag in ['h', 'hpp', 'hxx', 'hh']:
                                 lang_tag = 'cpp'
-                            elif lang_tag == 'ui':
+                            elif lang_tag == 'ui' or lang_tag == 'qrc':
                                 lang_tag = 'xml'
+                            elif lang_tag == 'conf':
+                                lang_tag = 'ini'
 
                             outfile.write(f"#### File: `{rel_path}`\n")
                             outfile.write(f"<file_block path=\"{rel_path}\" type=\"{type_tag}\">\n\n")
