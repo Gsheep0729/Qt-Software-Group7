@@ -1,0 +1,7 @@
+<RCC>
+    <qresource>
+        <file>RectangleButton.qml</file>
+        <file>main.qml</file>
+        <file>rectangleButton.qmlproject</file>
+    </qresource>
+</RCC>

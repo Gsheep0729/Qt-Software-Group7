@@ -1,0 +1,6 @@
+module se.qt.MyModule
+
+MyButton         1.0 MyButton.qml
+MyClock          1.0 MyClock.qml
+MyTextBox        1.0 MyTextBox.qml
+MyTextConstants  1.0 MyTextConstants.qml

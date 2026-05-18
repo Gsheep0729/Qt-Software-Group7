@@ -1,0 +1,9 @@
+import QmlProject 1.1
+
+Project {
+    mainFile: "main.qml"          // ← 改这一行！
+
+    QmlFiles { directory: "." }
+    JavaScriptFiles { directory: "." }
+    ImageFiles { directory: "." }
+}

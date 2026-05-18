@@ -37,7 +37,16 @@
 **/qrc_*.cpp
 **/*.moc
 
-# --- 5. 彻底禁止 CMake 生成的本地状态 ---
+# --- 5. 彻底禁止 QML 构建缓存 ---
+**/*.qmlc
+**/*.jsc
+**/*.jsc2
+**/*.qmlc2
+**/qmlcache/
+**/.qmlls/
+**/qmldir/
+
+# --- 6. 彻底禁止 CMake 生成的本地状态 ---
 **/CMakeCache.txt
 **/CMakeScripts/
 **/cmake_install.cmake
@@ -45,13 +54,13 @@
 **/*.ninja
 **/*.cmake
 
-# --- 6. 彻底禁止 IDE 本地配置文件 (包含绝对路径) ---
+# --- 7. 彻底禁止 IDE 本地配置文件 (包含绝对路径) ---
 **/*.user
 **/*.user.*
 **/.vscode/
 **/.idea/
 
-# --- 7. 操作系统杂质 ---
+# --- 8. 操作系统杂质 ---
 **/.DS_Store
 **/Thumbs.db
 **/.*.swp
