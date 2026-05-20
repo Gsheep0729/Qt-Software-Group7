@@ -54,7 +54,8 @@ def merge_code_to_markdown(source_folder):
 
     BUILD_FILES_PATTERN = {
         'CMakeLists.txt', 'Makefile', 'makefile', 'GNUmakefile',
-        '.pro', '.cmake', '.pri', '.prf', '.qmake.conf', 'qmldir'
+        '.pro', '.cmake', '.pri', '.prf', '.qmake.conf', 'qmldir',
+        '.qmlproject'
     }
     # ===========================================
 
@@ -136,6 +137,8 @@ def merge_code_to_markdown(source_folder):
                             lang_tag = 'cmake'
                         elif file_ext in ['.pro', '.pri', '.prf']:
                             lang_tag = 'qmake'
+                        elif file_ext == '.qmlproject':
+                            lang_tag = 'qml'
                         elif 'makefile' in file_name.lower():
                             lang_tag = 'makefile'
                         else:
