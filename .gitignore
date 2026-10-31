@@ -1,0 +1,5 @@
+# Qt 构建产物与本地配置
+build*/
+.qtcreator/
+.qmlls.ini
+*.user
